@@ -1,0 +1,272 @@
+package client;
+
+import javax.xml.parsers.DocumentBuilderFactory;  
+import javax.xml.parsers.DocumentBuilder;  
+import org.w3c.dom.Document;  
+import org.w3c.dom.NodeList;  
+import org.w3c.dom.Node;  
+import org.w3c.dom.Element;  
+import java.io.File;
+
+import java.io.FileWriter;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.NamedNodeMap;
+
+public class CompoundTracking {
+    
+    private String strCompoundsFileName = "C:\\Projects\\PlateWellsTransfer\\Client\\Compounds.xml";
+    private String strPlatesFileName = "C:\\Projects\\PlateWellsTransfer\\Client\\Plates.xml";
+    
+    public CompoundTracking() {
+        super();
+    }
+    
+    // GetCompoundsXMLDocument
+    // - return the XMLDom for the Compounds XML
+    private Document GetCompoundsXMLDocument(){
+        
+        return GetXMLDocument(strCompoundsFileName);
+    }
+    
+    // GetPatesXMLDocument
+    // - return the XMLDom for the Plates XML
+    private Document GetPatesXMLDocument(){
+        
+        return GetXMLDocument(strPlatesFileName);
+    }
+
+    // GetXMLDocument
+    // - read xml file into Document object and return it to the caller
+    private Document GetXMLDocument(String strFilename){
+        
+        Document doc = null;
+        
+        try
+        {
+            File file = new File(strFilename);
+            
+            //an instance of factory that gives a document builder  
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();  
+            //an instance of builder to parse the specified xml file  
+            DocumentBuilder db = dbf.newDocumentBuilder();  
+            doc = db.parse(file);  
+            doc.getDocumentElement().normalize();
+        }
+        catch(Exception e) 
+        {
+            e.printStackTrace();
+        }
+        return doc;
+    }
+    
+    // GetCompounds
+    // - Read the compounds from the XML Document object and return a string array
+    public String[] GetCompounds(){
+        
+        String[] strCompounds = null;
+        
+        try
+        {
+            // Create the XML Document and get a node list of compound elements
+            Document doc = GetCompoundsXMLDocument();
+            //System.out.println("Root element: " + doc.getDocumentElement().getNodeName());  
+            Element root = doc.getDocumentElement();
+            NodeList nodeListCompounds = root.getElementsByTagName("Compound");  
+
+            // Instantiate the string array size for the number of compounds found 
+            strCompounds = new String[nodeListCompounds.getLength()];
+            
+            // nodeList is not iterable, so we are using for loop  
+            for (int i = 0; i < nodeListCompounds.getLength(); i++)   
+            {  
+                // Get the compound node
+                Node node = nodeListCompounds.item(i);  
+                //System.out.println("Local Name :" + node.getNodeName());  
+                
+                // Check if node is element
+                if (node.getNodeType() == Node.ELEMENT_NODE)   
+                {  
+                    // Get the CompoundID from the well element
+                    Element eElement = (Element) node;  
+                    String strCompoundID = eElement.getElementsByTagName("id").item(0).getTextContent();
+                    //System.out.println("Compound ID: "+ strCompoundID); 
+                    
+                    // Store the CompoundID into the string array
+                    strCompounds[i] = strCompoundID;
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        
+        // Return the Compounds string array
+        return strCompounds;
+    }
+    
+    // SaveCompounds
+    // - save the compounds in the string array to the XML file 
+    public void SaveCompounds(String[] strCompounds){
+        
+        try
+        {
+            // Define a factory to obtain a pasrer for the XML document
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.newDocument();
+                
+            // Create the root Compounds element and add to the document object
+            Element root = doc.createElement("Compounds");
+            doc.appendChild(root);
+            
+            // Loop through the compounds string array 
+            for(int i = 0; i < strCompounds.length; i++) 
+            {
+                // Create a new Compound element
+                Element compound = doc.createElement("Compound");
+                // Add the Compound element
+                root.appendChild(compound);
+                
+                // Create the id element and add it to the Compound
+                Element id = doc.createElement("id");
+                id.appendChild(doc.createTextNode(strCompounds[i]));
+                compound.appendChild(id);
+            }
+       
+            // Create the transforer factory and transfor object 
+            TransformerFactory factory = TransformerFactory.newInstance();
+            Transformer transformer = factory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+            
+            // Create a new DOM to save the XML Document
+            DOMSource source = new DOMSource(doc);
+            // Create the file writer with the specified file location of the Compounds XML file
+            FileWriter writer = new FileWriter(new File("C:\\Projects\\PlateWellsTransfer\\Client\\newCompounds.xml"));
+            // Create the stream writer object of the file and use the trasformer object to send the
+            // XML Document to the file
+            StreamResult result = new StreamResult(writer);
+            transformer.transform(source, result);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    // GetPlates
+    // - Read the plates from the XML Document object and return a string array
+    public String[] GetPlates(){
+        
+        String[] strPlates = null;
+        
+        try
+        {
+            // Create the XML Document and get a node list of plates
+            Document doc = GetPatesXMLDocument();
+            Element root = doc.getDocumentElement();
+            NodeList nodeListPlates = root.getElementsByTagName("Plate");  
+            
+            //System.out.println("Root element: " + doc.getDocumentElement().getNodeName());  
+            
+            // Instantiate the array with size of number of plates found
+            strPlates = new String[nodeListPlates.getLength()];
+            
+            // nodeList is not iterable, so we are using for loop  
+            for (int i = 0; i < nodeListPlates.getLength(); i++)   
+            {  
+                Node node = nodeListPlates.item(i);  
+                //System.out.println("Local Name :" + node.getNodeName());  
+                if (node.getNodeType() == Node.ELEMENT_NODE)   
+                {  
+                    Element eElement = (Element) node;  
+                    String strPlatrName = eElement.getElementsByTagName("Name").item(0).getTextContent();
+                    //System.out.println("Plate Name: "+ strPlatrName); 
+                    
+                    // Add the plate name to the plate array
+                    strPlates[i] = strPlatrName;
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        
+        // Return the plate string array
+        return strPlates;
+    }
+    
+    // GetPlate
+    // - Get the plate details from the Plates XML document
+    public Plate GetPlate(String strPlateName){
+        
+        // Create the plate object and set the name
+        Plate plate = new Plate();
+        plate.Name = strPlateName;
+        
+        try
+        {
+            // Create the XML document and get a node list of the plate elements
+            Document doc = GetPatesXMLDocument();
+            Element root = doc.getDocumentElement();
+            NodeList nodeListPlates = root.getElementsByTagName("Plate");  
+            //System.out.println("Root element: " + doc.getDocumentElement().getNodeName());  
+            
+            // Loop through the node list of plate found in the XML file
+            for (int iPlates = 0; iPlates < nodeListPlates.getLength(); iPlates++)   
+            {  
+                // Get the plate node from the node list
+                Node nodePlate = nodeListPlates.item(iPlates);  
+                //System.out.println("Local Name :" + nodePlate.getNodeName());  
+                
+                // Check if node is element node
+                if (nodePlate.getNodeType() == Node.ELEMENT_NODE)   
+                {  
+                    // Get the string of the Name element
+                    Element ePlate = (Element) nodePlate;  
+                    String strPlate = ePlate.getElementsByTagName("Name").item(0).getTextContent();
+                    //System.out.println("Plate Name: "+ strPlate); 
+    
+                    // Check if specified plate is found
+                    if( strPlateName.contains(strPlate))
+                    {
+                        // Get a node list of wells found in the plate
+                        NodeList nodeListWells = ePlate.getElementsByTagName("Well");
+                        //System.out.println("Wells count :" + nodeListWells.getLength());
+                        
+                        // Loop through the wells node list 
+                        for(int iWells = 0; iWells < nodeListWells.getLength(); iWells++) 
+                        {
+                            // Get the attributes of the well element
+                            NamedNodeMap nodeMap = nodeListWells.item(iWells).getAttributes();
+                            String strRow = nodeMap.getNamedItem("Row").getTextContent();
+                            int iColumn = Integer.parseInt( nodeMap.getNamedItem("Column").getTextContent());
+                            String strCompound = nodeMap.getNamedItem("Compound").getTextContent();
+                            // Add the well to the plate list object
+                            plate.AddWell(strRow, iColumn, strCompound);
+                            
+                            //System.out.println("Row=" + strRow + " Column=" + iColumn + " Compound=" + strCompound);
+                        }
+                        // Jump out of the loop since the plate was found
+                        break;
+                    }
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        
+        // return the plate list object
+        return plate;
+    }
+}

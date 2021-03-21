@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<Plates>
+    <Plate>
+        <Name>P-135123</Name>
+        <Well Row="A" Column="1" Compound="C234523"></Well>
+        <Well Row="A" Column="2" Compound="C432262"></Well>
+    </Plate>
+    <Plate>
+        <Name>P-24564</Name>
+        <Well Row="A" Column="1" Compound="C432262"></Well>
+    </Plate>
+</Plates>
