@@ -16,10 +16,8 @@ public class frmRegisterCompound extends JFrame {
     private JTextField txtCompound = new JTextField();
     private JButton btnAddCompound = new JButton();
     private JList lstCompounds = new JList();
-    private JButton btnRegister = new JButton();
     private JButton btnClose = new JButton();
     private DefaultListModel lstModel = new DefaultListModel();
-    private JButton btnGetCompounds = new JButton();
 
     public frmRegisterCompound() {
         try {
@@ -28,6 +26,9 @@ public class frmRegisterCompound extends JFrame {
             // Initialize the Compound JList control
             lstCompounds.setModel(lstModel);
             
+            // Load the compounds into the list control
+            GetCompounds();
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -35,7 +36,7 @@ public class frmRegisterCompound extends JFrame {
 
     private void jbInit() throws Exception {
         this.getContentPane().setLayout( null );
-        this.setSize(new Dimension(419, 256));
+        this.setSize(new Dimension(411, 256));
         this.setTitle("Register Compounds");
         jLabel1.setText("Enter Compound ID:");
         jLabel1.setBounds(new Rectangle(10, 15, 110, 15));
@@ -49,14 +50,6 @@ public class frmRegisterCompound extends JFrame {
                 }
             });
         lstCompounds.setBounds(new Rectangle(10, 60, 180, 140));
-        btnRegister.setText("Register");
-        btnRegister.setBounds(new Rectangle(215, 90, 125, 20));
-        btnRegister.setActionCommand("btnRegister");
-        btnRegister.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    btnRegister_actionPerformed(e);
-                }
-            });
         btnClose.setText("Close");
         btnClose.setBounds(new Rectangle(290, 180, 90, 20));
         btnClose.setActionCommand("btnClose");
@@ -65,17 +58,7 @@ public class frmRegisterCompound extends JFrame {
                     btnClose_actionPerformed(e);
                 }
             });
-        btnGetCompounds.setText("Get Compounds");
-        btnGetCompounds.setBounds(new Rectangle(215, 60, 125, 20));
-        btnGetCompounds.setActionCommand("Get Compounds");
-        btnGetCompounds.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    btnGetCompounds_actionPerformed(e);
-                }
-            });
-        this.getContentPane().add(btnGetCompounds, null);
         this.getContentPane().add(btnClose, null);
-        this.getContentPane().add(btnRegister, null);
         this.getContentPane().add(lstCompounds, null);
         this.getContentPane().add(btnAddCompound, null);
         this.getContentPane().add(txtCompound, null);
@@ -96,11 +79,14 @@ public class frmRegisterCompound extends JFrame {
         String strCompound = txtCompound.getText();
         // Add the Compound ID to the list
         lstModel.addElement(strCompound);
+        
+        // Save the Compounds
+        SaveCompounds();
     }
 
-    // Register button event handler
-    // - add the user entered Compound IDs to final storage
-    private void btnRegister_actionPerformed(ActionEvent e) {
+    // SaveCompounds
+    // - save the conpounds in the list control
+    private void SaveCompounds() {
         
         CompoundTracking compounds = new CompoundTracking();
         String[] strCompounds = new String[lstModel.getSize()];
@@ -112,10 +98,11 @@ public class frmRegisterCompound extends JFrame {
         }
         compounds.SaveCompounds(strCompounds);
     }
-
-    // Get Compounds button event handler
-    // - get the list of compounds and add them to the JList
-    private void btnGetCompounds_actionPerformed(ActionEvent e) {
+    
+    // GetCompounds
+    // - get the list of compounds from the data store
+    private void GetCompounds(){
+        
         
         // Get a string array of CompoundIDs from the CompoundTracking data store
         CompoundTracking compounds = new CompoundTracking();
@@ -125,8 +112,7 @@ public class frmRegisterCompound extends JFrame {
         lstModel.removeAllElements();
         
         // Loop through the string array of CompoundIDs and add to the list control
-        for(int i = 0; i < strCompounds.length; i++)
-        {
+        for(int i = 0; i < strCompounds.length; i++) {
             lstModel.addElement(strCompounds[i]);
         }
     }

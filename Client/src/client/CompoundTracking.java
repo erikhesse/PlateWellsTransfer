@@ -78,7 +78,6 @@ public class CompoundTracking {
         {
             // Create the XML Document and get a node list of compound elements
             Document doc = GetCompoundsXMLDocument();
-            //System.out.println("Root element: " + doc.getDocumentElement().getNodeName());  
             Element root = doc.getDocumentElement();
             NodeList nodeListCompounds = root.getElementsByTagName("Compound");  
 
@@ -90,7 +89,6 @@ public class CompoundTracking {
             {  
                 // Get the compound node
                 Node node = nodeListCompounds.item(i);  
-                //System.out.println("Local Name :" + node.getNodeName());  
                 
                 // Check if node is element
                 if (node.getNodeType() == Node.ELEMENT_NODE)   
@@ -98,7 +96,6 @@ public class CompoundTracking {
                     // Get the CompoundID from the well element
                     Element eElement = (Element) node;  
                     String strCompoundID = eElement.getElementsByTagName("id").item(0).getTextContent();
-                    //System.out.println("Compound ID: "+ strCompoundID); 
                     
                     // Store the CompoundID into the string array
                     strCompounds[i] = strCompoundID;
@@ -152,7 +149,7 @@ public class CompoundTracking {
             // Create a new DOM to save the XML Document
             DOMSource source = new DOMSource(doc);
             // Create the file writer with the specified file location of the Compounds XML file
-            FileWriter writer = new FileWriter(new File("C:\\Projects\\PlateWellsTransfer\\Client\\Compounds.xml"));
+            FileWriter writer = new FileWriter(new File(strCompoundsFileName));
             // Create the stream writer object of the file and use the trasformer object to send the
             // XML Document to the file
             StreamResult result = new StreamResult(writer);
@@ -214,7 +211,7 @@ public class CompoundTracking {
             // Create a new DOM to save the XML Document
             DOMSource source = new DOMSource(doc);
             // Create the file writer with the specified file location of the Plates XML file
-            FileWriter writer = new FileWriter(new File("C:\\Projects\\PlateWellsTransfer\\Client\\Plates.xml"));
+            FileWriter writer = new FileWriter(new File(strPlatesFileName));
             // Create the stream writer object of the file and use the trasformer object to send the
             // XML Document to the file
             StreamResult result = new StreamResult(writer);
@@ -238,14 +235,12 @@ public class CompoundTracking {
             Document doc = GetPatesXMLDocument();
             Element root = doc.getDocumentElement();
             NodeList nodeListPlates = root.getElementsByTagName("Plate");  
-            //System.out.println("Root element: " + doc.getDocumentElement().getNodeName());  
             
             // Loop through the node list of plate found in the XML file
             for (int iPlates = 0; iPlates < nodeListPlates.getLength(); iPlates++)   
             {  
                 // Get the plate node from the node list
                 Node nodePlate = nodeListPlates.item(iPlates);  
-                //System.out.println("Local Name :" + nodePlate.getNodeName());  
                 
                 // Check if node is element node
                 if (nodePlate.getNodeType() == Node.ELEMENT_NODE)   
@@ -253,8 +248,7 @@ public class CompoundTracking {
                     // Get the string of the Name element
                     Element ePlate = (Element) nodePlate;  
                     String strPlate = ePlate.getElementsByTagName("Name").item(0).getTextContent();
-                    //System.out.println("Plate Name: "+ strPlate); 
-            
+                    
                     // Create the Plate object, set the name and add to the Plates ArrayList
                     Plate plate = new Plate();
                     plate.Name = strPlate;
@@ -262,7 +256,6 @@ public class CompoundTracking {
                     
                     // Get a node list of wells found in the plate
                     NodeList nodeListWells = ePlate.getElementsByTagName("Well");
-                    //System.out.println("Wells count :" + nodeListWells.getLength());
                     
                     // Loop through the wells node list 
                     for(int iWells = 0; iWells < nodeListWells.getLength(); iWells++) 
@@ -274,8 +267,6 @@ public class CompoundTracking {
                         String strCompound = nodeMap.getNamedItem("Compound").getTextContent();
                         // Add the well to the plate list object
                         plate.AddWell(strRow, iColumn, strCompound);
-                        
-                        //System.out.println("Row=" + strRow + " Column=" + iColumn + " Compound=" + strCompound);
                     }
                 }
             }

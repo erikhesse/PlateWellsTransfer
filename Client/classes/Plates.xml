@@ -2,8 +2,13 @@
 <Plates>
     <Plate>
         <Name>P-135123</Name>
+        <Well Column="1" Compound="C234523" Row="A"/>
+        <Well Column="2" Compound="C432262" Row="A"/>
+        <Well Column="2" Compound="C2346234" Row="B"/>
     </Plate>
     <Plate>
         <Name>P-24564</Name>
+        <Well Column="2" Compound="C234523" Row="A"/>
+        <Well Column="1" Compound="C432262" Row="A"/>
     </Plate>
 </Plates>
