@@ -1,9 +1,12 @@
-<?xml version="1.0" encoding="windows-1252" ?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Compounds>
     <Compound>
         <id>C234523</id>
     </Compound>
     <Compound>
         <id>C432262</id>
+    </Compound>
+    <Compound>
+        <id>C2346234</id>
     </Compound>
 </Compounds>

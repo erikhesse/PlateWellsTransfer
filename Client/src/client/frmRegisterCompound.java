@@ -35,7 +35,7 @@ public class frmRegisterCompound extends JFrame {
 
     private void jbInit() throws Exception {
         this.getContentPane().setLayout( null );
-        this.setSize(new Dimension(395, 240));
+        this.setSize(new Dimension(419, 256));
         this.setTitle("Register Compounds");
         jLabel1.setText("Enter Compound ID:");
         jLabel1.setBounds(new Rectangle(10, 15, 110, 15));

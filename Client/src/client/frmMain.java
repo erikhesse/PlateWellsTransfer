@@ -7,13 +7,11 @@ import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.awt.event.MouseAdapter;
-
 import java.awt.event.MouseEvent;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -21,9 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JToolBar;
 
 public class frmMain extends JFrame {
     BorderLayout layoutMain = new BorderLayout();
@@ -61,9 +57,9 @@ public class frmMain extends JFrame {
     private JLabel lblD2 = new JLabel();
     private JLabel lblD4 = new JLabel();
     private JLabel lblD3 = new JLabel();
-
-    private Plate mainPlate;
     private JLabel lblPlateName = new JLabel();
+
+    private List<Plate> plates = new ArrayList<Plate>();
 
     public frmMain() {
         try {
@@ -83,7 +79,7 @@ public class frmMain extends JFrame {
         this.setJMenuBar( menuBar );
         this.getContentPane().setLayout( layoutMain );
         panelCenter.setLayout( null );
-        this.setSize(new Dimension(505, 393));
+        this.setSize(new Dimension(505, 388));
         this.setTitle( "Plate Wells Transfer" );
         menuFile.setText( "File" );
         menuFileExit.setText( "Exit" );
@@ -315,13 +311,20 @@ public class frmMain extends JFrame {
     // - get the plate details for the selected plate
     private void btnGetPlate_actionPerformed(ActionEvent e) {
         
+        // Check if first default item is not selected
         if (cmbPlates.getSelectedIndex() != 0){
-            CompoundTracking cmpTracking = new CompoundTracking();
+        
+            // Get the selected plate name
             String strPlate = cmbPlates.getSelectedItem().toString();
-            mainPlate = cmpTracking.GetPlate(strPlate);
             
-            // Update plate layout controls with the selected plate information
-            DisplayPlate();
+            // Loop through the plates list for the selected plate
+            for(int i = 0; i < plates.size(); i++){
+                if(plates.get(i).Name.contains(strPlate)){
+                    // Update plate layout controls with the selected plate information
+                    DisplayPlate(plates.get(i));
+                    break;
+                }
+            }
         }
         else{
             // Clear the plate layout controls
@@ -516,8 +519,7 @@ public class frmMain extends JFrame {
             AddCompoundToWell("D", 4);
         }
     }
-    
-    
+
     // AddCompoundToWell
     // - allow the user to add a compound to the selected well
     private void AddCompoundToWell(String strRow, int iColumn){
@@ -526,108 +528,127 @@ public class frmMain extends JFrame {
         frmAddCompound frm = new frmAddCompound(this,"Add Compound", true);
         frm.setLocation(this.getLocation());
         frm.setVisible(true);
-        
-        System.out.print("Compound = " + frm.CompoundID);
+
+        // Loop through the plates list for the selected plate
+        for(int i = 0; i < plates.size(); i++){
+            if(plates.get(i).Name.contains(lblPlateName.getText())){
+                
+                // Add the well to the selected plate
+                plates.get(i).AddWell(strRow, iColumn, frm.CompoundID);
+
+                //Update the plate layout controls
+                DisplayPlate(plates.get(i));
+
+                // Persist the changes to the data store
+                CompoundTracking cmpTracking = new CompoundTracking();
+                cmpTracking.SavePlates(plates);
+                
+                // Jump out of the loop
+                break;
+            }
+        }
     }
     
     // LoadPlates
     // - read the Plates from the XML file and load into the combobox
     private void LoadPlates() {
         
+        // Create the Compoundtracking object and get the list of plates
         CompoundTracking cmpTracking = new CompoundTracking();
-        String[] strPlates = cmpTracking.GetPlates();
+        plates = cmpTracking.GetPlates();
 
+        // Add default plates item
         cmbPlates.addItem("- Select Plate -");
         
-        for(int i = 0; i < strPlates.length; i++)
-        {
-            cmbPlates.addItem(strPlates[i]);
+        // Loop through the plates list and add the plate names to the dropdown
+        for(int i = 0; i < plates.size(); i++){
+            cmbPlates.addItem(plates.get(i).Name);
         }
     }
     
     // DisplayPlate
     // - update plate layout controls with the specified plate information
-    private void DisplayPlate(){
+    private void DisplayPlate(Plate plate){
 
         // Clear the current plate layout controls
         ClearPlate();
             
         // Set the Plate Name label
-        lblPlateName.setText(mainPlate.Name);
+        lblPlateName.setText(plate.Name);
         
         // Loop through the plate wells and update the plate layout controls 
-        for(int i = 0; i < mainPlate.Wells.size(); i++){
+        for(int i = 0; i < plate.Wells.size(); i++){
         
             // Get well Row Column string
-            String strRowColumn = mainPlate.Wells.get(i).RowColumn();
+            String strRowColumn = plate.Wells.get(i).RowColumn();
             
             // Set Row A
             if(strRowColumn.contains("A1")){
                 lblA1.setBackground(Color.green);    
-                lblA1.setText(mainPlate.Wells.get(i).Compound);
+                lblA1.setText(plate.Wells.get(i).Compound);
             }
             else if(strRowColumn.contains("A2")){
                 lblA2.setBackground(Color.green); 
-                lblA2.setText(mainPlate.Wells.get(i).Compound);
+                lblA2.setText(plate.Wells.get(i).Compound);
             }
             else if(strRowColumn.contains("A3")){
                 lblA3.setBackground(Color.green); 
-                lblA3.setText(mainPlate.Wells.get(i).Compound);
+                lblA3.setText(plate.Wells.get(i).Compound);
             }
             else if(strRowColumn.contains("A4")){
                 lblA4.setBackground(Color.green); 
-                lblA4.setText(mainPlate.Wells.get(i).Compound);
+                lblA4.setText(plate.Wells.get(i).Compound);
             }
             // Set Row B
             else if(strRowColumn.contains("B1")){
                 lblB1.setBackground(Color.green);    
-                lblB1.setText(mainPlate.Wells.get(i).Compound);
+                lblB1.setText(plate.Wells.get(i).Compound);
             }
             else if(strRowColumn.contains("B2")){
                 lblB2.setBackground(Color.green); 
-                lblB2.setText(mainPlate.Wells.get(i).Compound);
+                lblB2.setText(plate.Wells.get(i).Compound);
             }
             else if(strRowColumn.contains("B3")){
                 lblB3.setBackground(Color.green); 
-                lblB3.setText(mainPlate.Wells.get(i).Compound);
+                lblB3.setText(plate.Wells.get(i).Compound);
             }
             else if(strRowColumn.contains("B4")){
                 lblB4.setBackground(Color.green); 
-                lblB4.setText(mainPlate.Wells.get(i).Compound);
+                lblB4.setText(plate.Wells.get(i).Compound);
             }
             // Set Row C
             else if(strRowColumn.contains("C1")){
                 lblC1.setBackground(Color.green);    
-                lblC1.setText(mainPlate.Wells.get(i).Compound);
+                lblC1.setText(plate.Wells.get(i).Compound);
             }
             else if(strRowColumn.contains("C2")){
                 lblC2.setBackground(Color.green); 
-                lblC2.setText(mainPlate.Wells.get(i).Compound);
+                lblC2.setText(plate.Wells.get(i).Compound);
             }
             else if(strRowColumn.contains("C3")){
                 lblC3.setBackground(Color.green); 
-                lblC3.setText(mainPlate.Wells.get(i).Compound);
+                lblC3.setText(plate.Wells.get(i).Compound);
             }
             else if(strRowColumn.contains("C4")){
                 lblC4.setBackground(Color.green); 
-                lblC4.setText(mainPlate.Wells.get(i).Compound);
+                lblC4.setText(plate.Wells.get(i).Compound);
             }
             // Set Row D
             else if(strRowColumn.contains("D1")){
                 lblD1.setBackground(Color.green);    
-                lblD1.setText(mainPlate.Wells.get(i).Compound);
+                lblD1.setText(plate.Wells.get(i).Compound);
             }
             else if(strRowColumn.contains("D2")){
                 lblD2.setBackground(Color.green); 
-                lblD2.setText(mainPlate.Wells.get(i).Compound);
+                lblD2.setText(plate.Wells.get(i).Compound);
             }
             else if(strRowColumn.contains("D3")){
                 lblD3.setBackground(Color.green); 
-                lblD3.setText(mainPlate.Wells.get(i).Compound);
+                lblD3.setText(plate.Wells.get(i).Compound);
             }
             else if(strRowColumn.contains("D4")){
                 lblD4.setBackground(Color.green); 
-                lblD4.setText(mainPlate.Wells.get(i).Compound);
+                lblD4.setText(plate.Wells.get(i).Compound);
             }
         }
     }

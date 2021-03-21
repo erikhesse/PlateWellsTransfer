@@ -10,6 +10,9 @@ import java.io.File;
 
 import java.io.FileWriter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -149,7 +152,69 @@ public class CompoundTracking {
             // Create a new DOM to save the XML Document
             DOMSource source = new DOMSource(doc);
             // Create the file writer with the specified file location of the Compounds XML file
-            FileWriter writer = new FileWriter(new File("C:\\Projects\\PlateWellsTransfer\\Client\\newCompounds.xml"));
+            FileWriter writer = new FileWriter(new File("C:\\Projects\\PlateWellsTransfer\\Client\\Compounds.xml"));
+            // Create the stream writer object of the file and use the trasformer object to send the
+            // XML Document to the file
+            StreamResult result = new StreamResult(writer);
+            transformer.transform(source, result);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    // SavePlates
+    // - save the plates in the List to the XML file 
+    public void SavePlates(List<Plate> plates){
+        
+        try
+        {
+            // Define a factory to obtain a pasrer for the XML document
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.newDocument();
+                
+            // Create the root Compounds element and add to the document object
+            Element root = doc.createElement("Plates");
+            doc.appendChild(root);
+            
+            // Loop through the plates list
+            for(int iPlate = 0; iPlate < plates.size(); iPlate++) 
+            {
+                // Create a new Compound element
+                Element plate = doc.createElement("Plate");
+                // Add the Compound element
+                root.appendChild(plate);
+                
+                // Create the Name element and add it to the Plate element
+                Element name = doc.createElement("Name");
+                name.appendChild(doc.createTextNode(plates.get(iPlate).Name));
+                plate.appendChild(name);
+                
+                // Loop through the wells list
+                for(int iWell = 0; iWell <plates.get(iPlate).Wells.size(); iWell++ ){
+                    
+                    // Create the Well element
+                    Element well = doc.createElement("Well");
+                    // Add the well attributes to the Well element                    
+                    well.setAttribute("Row", plates.get(iPlate).Wells.get(iWell).Row);
+                    well.setAttribute("Column", String.valueOf(plates.get(iPlate).Wells.get(iWell).Column));
+                    well.setAttribute("Compound", plates.get(iPlate).Wells.get(iWell).Compound);
+                    plate.appendChild(well);
+                }
+            }
+       
+            // Create the transforer factory and transfor object 
+            TransformerFactory factory = TransformerFactory.newInstance();
+            Transformer transformer = factory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+            
+            // Create a new DOM to save the XML Document
+            DOMSource source = new DOMSource(doc);
+            // Create the file writer with the specified file location of the Plates XML file
+            FileWriter writer = new FileWriter(new File("C:\\Projects\\PlateWellsTransfer\\Client\\Plates.xml"));
             // Create the stream writer object of the file and use the trasformer object to send the
             // XML Document to the file
             StreamResult result = new StreamResult(writer);
@@ -163,35 +228,55 @@ public class CompoundTracking {
     
     // GetPlates
     // - Read the plates from the XML Document object and return a string array
-    public String[] GetPlates(){
+    public List<Plate> GetPlates(){
         
-        String[] strPlates = null;
+        List<Plate> plates = new ArrayList<Plate>();
         
         try
         {
-            // Create the XML Document and get a node list of plates
+            // Create the XML document and get a node list of the plate elements
             Document doc = GetPatesXMLDocument();
             Element root = doc.getDocumentElement();
             NodeList nodeListPlates = root.getElementsByTagName("Plate");  
-            
             //System.out.println("Root element: " + doc.getDocumentElement().getNodeName());  
             
-            // Instantiate the array with size of number of plates found
-            strPlates = new String[nodeListPlates.getLength()];
-            
-            // nodeList is not iterable, so we are using for loop  
-            for (int i = 0; i < nodeListPlates.getLength(); i++)   
+            // Loop through the node list of plate found in the XML file
+            for (int iPlates = 0; iPlates < nodeListPlates.getLength(); iPlates++)   
             {  
-                Node node = nodeListPlates.item(i);  
-                //System.out.println("Local Name :" + node.getNodeName());  
-                if (node.getNodeType() == Node.ELEMENT_NODE)   
+                // Get the plate node from the node list
+                Node nodePlate = nodeListPlates.item(iPlates);  
+                //System.out.println("Local Name :" + nodePlate.getNodeName());  
+                
+                // Check if node is element node
+                if (nodePlate.getNodeType() == Node.ELEMENT_NODE)   
                 {  
-                    Element eElement = (Element) node;  
-                    String strPlatrName = eElement.getElementsByTagName("Name").item(0).getTextContent();
-                    //System.out.println("Plate Name: "+ strPlatrName); 
+                    // Get the string of the Name element
+                    Element ePlate = (Element) nodePlate;  
+                    String strPlate = ePlate.getElementsByTagName("Name").item(0).getTextContent();
+                    //System.out.println("Plate Name: "+ strPlate); 
+            
+                    // Create the Plate object, set the name and add to the Plates ArrayList
+                    Plate plate = new Plate();
+                    plate.Name = strPlate;
+                    plates.add(plate);
                     
-                    // Add the plate name to the plate array
-                    strPlates[i] = strPlatrName;
+                    // Get a node list of wells found in the plate
+                    NodeList nodeListWells = ePlate.getElementsByTagName("Well");
+                    //System.out.println("Wells count :" + nodeListWells.getLength());
+                    
+                    // Loop through the wells node list 
+                    for(int iWells = 0; iWells < nodeListWells.getLength(); iWells++) 
+                    {
+                        // Get the attributes of the well element
+                        NamedNodeMap nodeMap = nodeListWells.item(iWells).getAttributes();
+                        String strRow = nodeMap.getNamedItem("Row").getTextContent();
+                        int iColumn = Integer.parseInt( nodeMap.getNamedItem("Column").getTextContent());
+                        String strCompound = nodeMap.getNamedItem("Compound").getTextContent();
+                        // Add the well to the plate list object
+                        plate.AddWell(strRow, iColumn, strCompound);
+                        
+                        //System.out.println("Row=" + strRow + " Column=" + iColumn + " Compound=" + strCompound);
+                    }
                 }
             }
         }
@@ -200,8 +285,8 @@ public class CompoundTracking {
             e.printStackTrace();
         }
         
-        // Return the plate string array
-        return strPlates;
+        // Return the plate list 
+        return plates;
     }
     
     // GetPlate
