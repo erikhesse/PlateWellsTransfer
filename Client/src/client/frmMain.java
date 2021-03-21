@@ -71,6 +71,7 @@ public class frmMain extends JFrame {
             
             // Load Plates into cmoboBox control
             LoadPlates();
+            // Clear the plate layout controls
             ClearPlate();
             
         } catch (Exception e) {
@@ -82,7 +83,7 @@ public class frmMain extends JFrame {
         this.setJMenuBar( menuBar );
         this.getContentPane().setLayout( layoutMain );
         panelCenter.setLayout( null );
-        this.setSize(new Dimension(581, 438));
+        this.setSize(new Dimension(505, 393));
         this.setTitle( "Plate Wells Transfer" );
         menuFile.setText( "File" );
         menuFileExit.setText( "Exit" );
@@ -147,49 +148,124 @@ public class frmMain extends JFrame {
         lblA2.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblA2.setToolTipText("A2");
         lblA2.setOpaque(true);
+        lblA2.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    lblA2_mouseClicked(e);
+                }
+            });
         lblA3.setBounds(new Rectangle(160, 100, 55, 45));
         lblA3.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblA3.setOpaque(true);
+        lblA3.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    lblA3_mouseClicked(e);
+                }
+            });
         lblA4.setBounds(new Rectangle(225, 100, 55, 45));
         lblA4.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblA4.setOpaque(true);
+        lblA4.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    lblA4_mouseClicked(e);
+                }
+            });
         lblB1.setBounds(new Rectangle(30, 155, 55, 45));
         lblB1.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblB1.setOpaque(true);
+        lblB1.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    lblB1_mouseClicked(e);
+                }
+            });
         lblB2.setBounds(new Rectangle(95, 155, 55, 45));
         lblB2.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblB2.setOpaque(true);
+        lblB2.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    lblB2_mouseClicked(e);
+                }
+            });
         lblB3.setBounds(new Rectangle(160, 155, 55, 45));
         lblB3.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblB3.setOpaque(true);
+        lblB3.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    lblB3_mouseClicked(e);
+                }
+            });
         lblB4.setBounds(new Rectangle(225, 155, 55, 45));
         lblB4.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblB4.setOpaque(true);
+        lblB4.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    lblB4_mouseClicked(e);
+                }
+            });
         lblC1.setBounds(new Rectangle(30, 210, 55, 45));
         lblC1.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblC1.setOpaque(true);
+        lblC1.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    lblC1_mouseClicked(e);
+                }
+            });
         lblC2.setBounds(new Rectangle(95, 210, 55, 45));
         lblC2.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblC2.setOpaque(true);
+        lblC2.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    lblC2_mouseClicked(e);
+                }
+            });
         lblC3.setBounds(new Rectangle(160, 210, 55, 45));
         lblC3.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblC3.setOpaque(true);
+        lblC3.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    lblC3_mouseClicked(e);
+                }
+            });
         lblC4.setBounds(new Rectangle(225, 210, 55, 45));
         lblC4.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblC4.setOpaque(true);
+        lblC4.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    lblC4_mouseClicked(e);
+                }
+            });
         lblD1.setBounds(new Rectangle(30, 265, 55, 45));
         lblD1.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblD1.setOpaque(true);
+        lblD1.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    lblD1_mouseClicked(e);
+                }
+            });
         lblD2.setBounds(new Rectangle(95, 265, 55, 45));
         lblD2.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblD2.setOpaque(true);
+        lblD2.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    lblD2_mouseClicked(e);
+                }
+            });
         lblD4.setBounds(new Rectangle(225, 265, 55, 45));
         lblD4.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblD4.setToolTipText("D4");
         lblD4.setOpaque(true);
+        lblD4.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    lblD4_mouseClicked(e);
+                }
+            });
         lblD3.setBounds(new Rectangle(160, 265, 55, 45));
         lblD3.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblD3.setOpaque(true);
+        lblD3.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    lblD3_mouseClicked(e);
+                }
+            });
         lblPlateName.setText("Plate Name");
         lblPlateName.setBounds(new Rectangle(10, 55, 115, 15));
         lblPlateName.setFont(new Font("Tahoma", 1, 16));
@@ -229,12 +305,10 @@ public class frmMain extends JFrame {
         panelCenter.add(jLabel1, null);
     }
 
+    // File->Exit menu item event handler
+    // - exit the application
     void fileExit_ActionPerformed(ActionEvent e) {
         System.exit(0);
-    }
-
-    void helpAbout_ActionPerformed(ActionEvent e) {
-        JOptionPane.showMessageDialog(this, new frmMain_AboutBoxPanel1(), "About", JOptionPane.PLAIN_MESSAGE);
     }
 
     // btnGetPlate button event handler
@@ -259,20 +333,201 @@ public class frmMain extends JFrame {
     // - show the frmRegisterCompounds form to allow the user to add compounds
     private void btnRegisterCompound_actionPerformed(ActionEvent e) {
     
+        // Create the Register Compounds form
         frmRegisterCompound frm = new frmRegisterCompound();
         
+        // Set the location and make visible
         frm.setLocation(this.getLocation());
         frm.setVisible(true);
     }
 
     private void lblA1_mouseClicked(MouseEvent e) {
-        
+
+        // Check click count to only handle double click event
+        if (e.getClickCount() == 2 && !e.isConsumed()) {
+            e.consume();
+
+            // Allow the user to select a compound from a dialog and add it to the selected well
+            AddCompoundToWell("A", 1);
+        }
     }
+
+    private void lblA2_mouseClicked(MouseEvent e) {
+        
+        // Check click count to only handle double click event
+        if (e.getClickCount() == 2 && !e.isConsumed()) {
+            e.consume();
+
+            // Allow the user to select a compound from a dialog and add it to the selected well
+            AddCompoundToWell("A", 2);
+        }
+    }
+
+    private void lblA3_mouseClicked(MouseEvent e) {
+        
+        // Check click count to only handle double click event
+        if (e.getClickCount() == 2 && !e.isConsumed()) {
+            e.consume();
+
+            // Allow the user to select a compound from a dialog and add it to the selected well
+            AddCompoundToWell("A", 3);
+        }
+    }
+
+    private void lblA4_mouseClicked(MouseEvent e) {
+        
+        // Check click count to only handle double click event
+        if (e.getClickCount() == 2 && !e.isConsumed()) {
+            e.consume();
+
+            // Allow the user to select a compound from a dialog and add it to the selected well
+            AddCompoundToWell("A", 4);
+        }
+    }
+
+    private void lblB1_mouseClicked(MouseEvent e) {
+        
+        // Check click count to only handle double click event
+        if (e.getClickCount() == 2 && !e.isConsumed()) {
+            e.consume();
+
+            // Allow the user to select a compound from a dialog and add it to the selected well
+            AddCompoundToWell("B", 1);
+        }
+    }
+
+    private void lblB2_mouseClicked(MouseEvent e) {
+        
+        // Check click count to only handle double click event
+        if (e.getClickCount() == 2 && !e.isConsumed()) {
+            e.consume();
+
+            // Allow the user to select a compound from a dialog and add it to the selected well
+            AddCompoundToWell("B", 2);
+        }
+    }
+
+    private void lblB3_mouseClicked(MouseEvent e) {
+        
+        // Check click count to only handle double click event
+        if (e.getClickCount() == 2 && !e.isConsumed()) {
+            e.consume();
+
+            // Allow the user to select a compound from a dialog and add it to the selected well
+            AddCompoundToWell("B", 3);
+        }
+    }
+
+    private void lblB4_mouseClicked(MouseEvent e) {
+        
+        // Check click count to only handle double click event
+        if (e.getClickCount() == 2 && !e.isConsumed()) {
+            e.consume();
+
+            // Allow the user to select a compound from a dialog and add it to the selected well
+            AddCompoundToWell("B", 4);
+        }
+    }
+
+    private void lblC1_mouseClicked(MouseEvent e) {
+        
+        // Check click count to only handle double click event
+        if (e.getClickCount() == 2 && !e.isConsumed()) {
+            e.consume();
+
+            // Allow the user to select a compound from a dialog and add it to the selected well
+            AddCompoundToWell("C", 1);
+        }
+    }
+
+    private void lblC2_mouseClicked(MouseEvent e) {
+        
+        // Check click count to only handle double click event
+        if (e.getClickCount() == 2 && !e.isConsumed()) {
+            e.consume();
+
+            // Allow the user to select a compound from a dialog and add it to the selected well
+            AddCompoundToWell("C", 2);
+        }
+    }
+
+    private void lblC3_mouseClicked(MouseEvent e) {
+        
+        // Check click count to only handle double click event
+        if (e.getClickCount() == 2 && !e.isConsumed()) {
+            e.consume();
+
+            // Allow the user to select a compound from a dialog and add it to the selected well
+            AddCompoundToWell("C", 3);
+        }
+    }
+
+    private void lblC4_mouseClicked(MouseEvent e) {
+        
+        // Check click count to only handle double click event
+        if (e.getClickCount() == 2 && !e.isConsumed()) {
+            e.consume();
+
+            // Allow the user to select a compound from a dialog and add it to the selected well
+            AddCompoundToWell("C", 4);
+        }
+    }
+
+    private void lblD1_mouseClicked(MouseEvent e) {
+        
+        // Check click count to only handle double click event
+        if (e.getClickCount() == 2 && !e.isConsumed()) {
+            e.consume();
+
+            // Allow the user to select a compound from a dialog and add it to the selected well
+            AddCompoundToWell("D", 1);
+        }
+    }
+
+    private void lblD2_mouseClicked(MouseEvent e) {
+        
+        // Check click count to only handle double click event
+        if (e.getClickCount() == 2 && !e.isConsumed()) {
+            e.consume();
+
+            // Allow the user to select a compound from a dialog and add it to the selected well
+            AddCompoundToWell("D", 2);
+        }
+    }
+
+    private void lblD3_mouseClicked(MouseEvent e) {
+        
+        // Check click count to only handle double click event
+        if (e.getClickCount() == 2 && !e.isConsumed()) {
+            e.consume();
+
+            // Allow the user to select a compound from a dialog and add it to the selected well
+            AddCompoundToWell("D", 3);
+        }
+    }
+
+    private void lblD4_mouseClicked(MouseEvent e) {
+        
+        // Check click count to only handle double click event
+        if (e.getClickCount() == 2 && !e.isConsumed()) {
+            e.consume();
+
+            // Allow the user to select a compound from a dialog and add it to the selected well
+            AddCompoundToWell("D", 4);
+        }
+    }
+    
     
     // AddCompoundToWell
     // - allow the user to add a compound to the selected well
-    private void AddCompoundToWell(){
+    private void AddCompoundToWell(String strRow, int iColumn){
         
+        // Create dialog, set the location and make visible
+        frmAddCompound frm = new frmAddCompound(this,"Add Compound", true);
+        frm.setLocation(this.getLocation());
+        frm.setVisible(true);
+        
+        System.out.print("Compound = " + frm.CompoundID);
     }
     
     // LoadPlates

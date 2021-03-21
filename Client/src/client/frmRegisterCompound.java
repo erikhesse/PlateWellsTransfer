@@ -1,19 +1,15 @@
 package client;
 
 import java.awt.Dimension;
-
 import java.awt.Rectangle;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTextField;
-import javax.swing.ListModel;
 
 public class frmRegisterCompound extends JFrame {
     private JLabel jLabel1 = new JLabel();
@@ -22,7 +18,6 @@ public class frmRegisterCompound extends JFrame {
     private JList lstCompounds = new JList();
     private JButton btnRegister = new JButton();
     private JButton btnClose = new JButton();
-
     private DefaultListModel lstModel = new DefaultListModel();
     private JButton btnGetCompounds = new JButton();
 
@@ -122,11 +117,14 @@ public class frmRegisterCompound extends JFrame {
     // - get the list of compounds and add them to the JList
     private void btnGetCompounds_actionPerformed(ActionEvent e) {
         
+        // Get a string array of CompoundIDs from the CompoundTracking data store
         CompoundTracking compounds = new CompoundTracking();
-        
         String[] strCompounds = compounds.GetCompounds();
+        
+        // Clear the list before adding all CompoundIDs
         lstModel.removeAllElements();
         
+        // Loop through the string array of CompoundIDs and add to the list control
         for(int i = 0; i < strCompounds.length; i++)
         {
             lstModel.addElement(strCompounds[i]);
