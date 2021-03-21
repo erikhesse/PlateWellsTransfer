@@ -12,4 +12,18 @@
         <Well Column="1" Compound="C432262" Row="A"/>
         <Well Column="3" Compound="C245624" Row="A"/>
     </Plate>
+    <Plate>
+        <Name>P-34534</Name>
+        <Well Column="2" Compound="C2346234" Row="B"/>
+        <Well Column="3" Compound="C245624" Row="D"/>
+    </Plate>
+    <Plate>
+        <Name>P-93452</Name>
+        <Well Column="1" Compound="C234523" Row="B"/>
+        <Well Column="2" Compound="C2346234" Row="C"/>
+    </Plate>
+    <Plate>
+        <Name>P-83453</Name>
+        <Well Column="1" Compound="C432262" Row="A"/>
+    </Plate>
 </Plates>

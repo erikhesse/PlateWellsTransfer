@@ -98,6 +98,11 @@ public class frmMain extends JFrame {
         btnCreatePlate.setText("Create Plate");
         btnCreatePlate.setBounds(new Rectangle(345, 55, 130, 20));
         btnCreatePlate.setActionCommand("btnCreatePlate");
+        btnCreatePlate.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    btnCreatePlate_actionPerformed(e);
+                }
+            });
         btnRegisterCompound.setText("Register Compound");
         btnRegisterCompound.setBounds(new Rectangle(345, 15, 130, 20));
         btnRegisterCompound.setActionCommand("btnRegisterCompound");
@@ -344,6 +349,14 @@ public class frmMain extends JFrame {
         frm.setVisible(true);
     }
 
+    // btnCreateFile button event handler
+    // - show the frmPlateName
+    private void btnCreatePlate_actionPerformed(ActionEvent e) {
+
+        // Create the plate and add it to the Plates list        
+        CreatePlate();
+    }
+
     private void lblA1_mouseClicked(MouseEvent e) {
 
         // Check click count to only handle double click event
@@ -536,17 +549,46 @@ public class frmMain extends JFrame {
                 // Add the well to the selected plate
                 plates.get(i).AddWell(strRow, iColumn, frm.CompoundID);
 
-                //Update the plate layout controls
+                // Update the plate layout controls
                 DisplayPlate(plates.get(i));
 
-                // Persist the changes to the data store
-                CompoundTracking cmpTracking = new CompoundTracking();
-                cmpTracking.SavePlates(plates);
+                // Save the plates
+                SavePlates();
                 
                 // Jump out of the loop
                 break;
             }
         }
+    }
+    
+    // CreatePlate
+    // - get the plate name from the user
+    // - create the plate object and add it to the plates list
+    // - clear the plate layout controls and add the new plate
+    // - save the plate to the data store
+    private void CreatePlate(){
+       
+        // Create dialog, set the location and make visible
+        frmCreatePlate frm = new frmCreatePlate(this,"Create Plate", true);
+        frm.setLocation(this.getLocation());
+        frm.setVisible(true);
+
+        // Clear the plate layout controls
+        ClearPlate(); 
+        
+        // Create the plate object and add it to the plates list
+        Plate newPlate = new Plate();
+        newPlate.Name = frm.PlateName;
+        plates.add(newPlate);
+        
+        // Add the plate to the comboBox control
+        cmbPlates.addItem(newPlate.Name);
+        cmbPlates.setSelectedIndex(cmbPlates.getItemCount() - 1);
+        
+        DisplayPlate(newPlate);
+        
+        // Save the plates
+        SavePlates();
     }
     
     // LoadPlates
@@ -655,7 +697,7 @@ public class frmMain extends JFrame {
     
     // ClearPlate
     // - clear the plate layout controls
-    public void ClearPlate(){
+    private void ClearPlate(){
     
         // Set the Plate Name label
         lblPlateName.setText("");
@@ -696,5 +738,14 @@ public class frmMain extends JFrame {
         lblD3.setText("");
         lblD4.setBackground(Color.gray); 
         lblD4.setText("");
+    }
+    
+    // SavePlates
+    // - save the plate list to the data store
+    private void SavePlates(){
+        
+        // Persist the changes to the data store
+        CompoundTracking cmpTracking = new CompoundTracking();
+        cmpTracking.SavePlates(plates);
     }
 }

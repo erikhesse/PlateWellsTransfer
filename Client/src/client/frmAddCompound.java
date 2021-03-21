@@ -19,11 +19,13 @@ public class frmAddCompound extends JDialog {
     private JButton btnAdd = new JButton();
 
     String CompoundID;
-    
+
+    // frmAddCompound contructor
     public frmAddCompound() {
         this(null, "", false);
     }
 
+    // frmAddCompound constructor
     public frmAddCompound(Frame parent, String title, boolean modal) {
         super(parent, title, modal);
         try {
@@ -37,6 +39,7 @@ public class frmAddCompound extends JDialog {
         }
     }
 
+    // jbInit
     private void jbInit() throws Exception {
         this.setSize(new Dimension(288, 132));
         this.getContentPane().setLayout( null );
@@ -56,6 +59,8 @@ public class frmAddCompound extends JDialog {
         this.getContentPane().add(jLabel1, null);
     }
 
+    // Add button event handler
+    // - get the selected compound from the dropdown and close the form
     private void btnAdd_actionPerformed(ActionEvent e) {
         // Get the selected CompoundID 
         if(cmbCompounds.getSelectedIndex() > 0){

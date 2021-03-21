@@ -18,6 +18,7 @@ public class frmRegisterCompound extends JFrame {
     private JList lstCompounds = new JList();
     private JButton btnClose = new JButton();
     private DefaultListModel lstModel = new DefaultListModel();
+    private JLabel jLabel2 = new JLabel();
 
     public frmRegisterCompound() {
         try {
@@ -36,28 +37,31 @@ public class frmRegisterCompound extends JFrame {
 
     private void jbInit() throws Exception {
         this.getContentPane().setLayout( null );
-        this.setSize(new Dimension(411, 256));
+        this.setSize(new Dimension(313, 239));
         this.setTitle("Register Compounds");
         jLabel1.setText("Enter Compound ID:");
         jLabel1.setBounds(new Rectangle(10, 15, 110, 15));
-        txtCompound.setBounds(new Rectangle(140, 10, 120, 20));
+        txtCompound.setBounds(new Rectangle(10, 35, 120, 20));
         btnAddCompound.setText("Add Compound");
-        btnAddCompound.setBounds(new Rectangle(270, 10, 110, 20));
+        btnAddCompound.setBounds(new Rectangle(20, 70, 110, 20));
         btnAddCompound.setActionCommand("btnAddCompound");
         btnAddCompound.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     btnAddCompound_actionPerformed(e);
                 }
             });
-        lstCompounds.setBounds(new Rectangle(10, 60, 180, 140));
+        lstCompounds.setBounds(new Rectangle(160, 30, 115, 130));
         btnClose.setText("Close");
-        btnClose.setBounds(new Rectangle(290, 180, 90, 20));
+        btnClose.setBounds(new Rectangle(185, 170, 90, 20));
         btnClose.setActionCommand("btnClose");
         btnClose.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     btnClose_actionPerformed(e);
                 }
             });
+        jLabel2.setText("Compound List:");
+        jLabel2.setBounds(new Rectangle(160, 10, 80, 15));
+        this.getContentPane().add(jLabel2, null);
         this.getContentPane().add(btnClose, null);
         this.getContentPane().add(lstCompounds, null);
         this.getContentPane().add(btnAddCompound, null);
