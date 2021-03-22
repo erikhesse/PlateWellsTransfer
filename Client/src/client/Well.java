@@ -4,9 +4,9 @@ package client;
 // - contains the well properties
 public class Well {
     
-    String Row;
-    int Column;
-    String Compound;
+    String Row = "";
+    int Column = 0;
+    String Compound = "";
     
     public String RowColumn(){
         return Row + Column;

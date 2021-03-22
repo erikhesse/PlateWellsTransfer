@@ -7,7 +7,7 @@ import java.util.List;
 // - contains the plate and well properties
 public class Plate {
 
-    String Name;                                // Plate name
+    String Name = "";                           // Plate name
     List<Well> Wells = new ArrayList<Well>();   // List of well objects
     
     // AddWell

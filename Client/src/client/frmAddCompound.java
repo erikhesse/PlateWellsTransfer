@@ -18,7 +18,7 @@ public class frmAddCompound extends JDialog {
     private JComboBox cmbCompounds = new JComboBox();
     private JButton btnAdd = new JButton();
 
-    String CompoundID;
+    String CompoundID = "";
 
     // frmAddCompound contructor
     public frmAddCompound() {

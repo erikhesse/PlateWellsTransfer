@@ -335,16 +335,114 @@ public class frmMain extends JFrame {
         
         GetPlate();
     }
-    
+
     private void lblA1_mouseClicked(MouseEvent e) {
 
+        // Perform the mouse click event handling for the specified well
+        PerformWellMouseClick(e, lblA1, "A", 1);
+    }
+
+    private void lblA2_mouseClicked(MouseEvent e) {
+        
+        // Perform the mouse click event handling for the specified well
+        PerformWellMouseClick(e, lblA2, "A", 2);
+    }
+
+    private void lblA3_mouseClicked(MouseEvent e) {
+        
+        // Perform the mouse click event handling for the specified well
+        PerformWellMouseClick(e, lblA3, "A", 3);
+    }
+
+    private void lblA4_mouseClicked(MouseEvent e) {
+        
+        // Perform the mouse click event handling for the specified well
+        PerformWellMouseClick(e, lblA4, "A", 4);
+    }
+
+    private void lblB1_mouseClicked(MouseEvent e) {
+        
+        // Perform the mouse click event handling for the specified well
+        PerformWellMouseClick(e, lblB1, "B", 1);
+    }
+
+    private void lblB2_mouseClicked(MouseEvent e) {
+        
+        // Perform the mouse click event handling for the specified well
+        PerformWellMouseClick(e, lblB2, "B", 2);
+    }
+
+    private void lblB3_mouseClicked(MouseEvent e) {
+        
+        // Perform the mouse click event handling for the specified well
+        PerformWellMouseClick(e, lblB3, "B", 3);
+    }
+
+    private void lblB4_mouseClicked(MouseEvent e) {
+        
+        // Perform the mouse click event handling for the specified well
+        PerformWellMouseClick(e, lblB4, "B", 4);
+    }
+
+    private void lblC1_mouseClicked(MouseEvent e) {
+        
+        // Perform the mouse click event handling for the specified well
+        PerformWellMouseClick(e, lblC1, "C", 1);
+    }
+
+    private void lblC2_mouseClicked(MouseEvent e) {
+        
+        // Perform the mouse click event handling for the specified well
+        PerformWellMouseClick(e, lblC2, "C", 2);
+    }
+
+    private void lblC3_mouseClicked(MouseEvent e) {
+        
+        // Perform the mouse click event handling for the specified well
+        PerformWellMouseClick(e, lblC3, "C", 3);
+    }
+
+    private void lblC4_mouseClicked(MouseEvent e) {
+        
+        // Perform the mouse click event handling for the specified well
+        PerformWellMouseClick(e, lblC4, "C", 4);
+    }
+
+    private void lblD1_mouseClicked(MouseEvent e) {
+        
+        // Perform the mouse click event handling for the specified well
+        PerformWellMouseClick(e, lblD1, "D", 1);
+    }
+
+    private void lblD2_mouseClicked(MouseEvent e) {
+        
+        // Perform the mouse click event handling for the specified well
+        PerformWellMouseClick(e, lblD2, "D", 2);
+    }
+
+    private void lblD3_mouseClicked(MouseEvent e) {
+        
+        // Perform the mouse click event handling for the specified well
+        PerformWellMouseClick(e, lblD3, "D", 3);
+    }
+
+    private void lblD4_mouseClicked(MouseEvent e) {
+        
+        // Perform the mouse click event handling for the specified well
+        PerformWellMouseClick(e, lblD4, "D", 4);
+    }
+    
+    // PerformWellMouseClick
+    // - if right click and well is populated with a compound then display the frmTransferCompound dialog
+    // - if double left click and well is empty then display the frmAddCompound dialog
+    private void PerformWellMouseClick(MouseEvent e, JLabel lblWell, String strRow, int iColumn) {
+        
         // Check if right click
         if (e.getButton() == MouseEvent.BUTTON3){
-            System.out.print("Right click");
             
-            if(lblA1.getText().length() != 0){
+            if(lblWell.getText().length() != 0){
                 // Transfer the selected compound
-                TransfterCompound(lblA1.getText());
+                TransfterCompound(lblWell.getText());
             }
         }
         else{
@@ -352,178 +450,14 @@ public class frmMain extends JFrame {
             if (e.getClickCount() == 2 && !e.isConsumed()) {
                 e.consume(); 
                 
-                
-                // Allow the user to select a compound from a dialog and add it to the selected well
-                AddCompoundToWell("A", 1);
+                if(lblWell.getText().length() == 0){
+                    // Allow the user to select a compound from a dialog and add it to the selected well
+                    AddCompoundToWell(strRow, iColumn);
+                }
             }
         }
     }
-
-    private void lblA2_mouseClicked(MouseEvent e) {
-        
-        // Check click count to only handle double click event
-        if (e.getClickCount() == 2 && !e.isConsumed()) {
-            e.consume();
-
-            // Allow the user to select a compound from a dialog and add it to the selected well
-            AddCompoundToWell("A", 2);
-        }
-    }
-
-    private void lblA3_mouseClicked(MouseEvent e) {
-        
-        // Check click count to only handle double click event
-        if (e.getClickCount() == 2 && !e.isConsumed()) {
-            e.consume();
-
-            // Allow the user to select a compound from a dialog and add it to the selected well
-            AddCompoundToWell("A", 3);
-        }
-    }
-
-    private void lblA4_mouseClicked(MouseEvent e) {
-        
-        // Check click count to only handle double click event
-        if (e.getClickCount() == 2 && !e.isConsumed()) {
-            e.consume();
-
-            // Allow the user to select a compound from a dialog and add it to the selected well
-            AddCompoundToWell("A", 4);
-        }
-    }
-
-    private void lblB1_mouseClicked(MouseEvent e) {
-        
-        // Check click count to only handle double click event
-        if (e.getClickCount() == 2 && !e.isConsumed()) {
-            e.consume();
-
-            // Allow the user to select a compound from a dialog and add it to the selected well
-            AddCompoundToWell("B", 1);
-        }
-    }
-
-    private void lblB2_mouseClicked(MouseEvent e) {
-        
-        // Check click count to only handle double click event
-        if (e.getClickCount() == 2 && !e.isConsumed()) {
-            e.consume();
-
-            // Allow the user to select a compound from a dialog and add it to the selected well
-            AddCompoundToWell("B", 2);
-        }
-    }
-
-    private void lblB3_mouseClicked(MouseEvent e) {
-        
-        // Check click count to only handle double click event
-        if (e.getClickCount() == 2 && !e.isConsumed()) {
-            e.consume();
-
-            // Allow the user to select a compound from a dialog and add it to the selected well
-            AddCompoundToWell("B", 3);
-        }
-    }
-
-    private void lblB4_mouseClicked(MouseEvent e) {
-        
-        // Check click count to only handle double click event
-        if (e.getClickCount() == 2 && !e.isConsumed()) {
-            e.consume();
-
-            // Allow the user to select a compound from a dialog and add it to the selected well
-            AddCompoundToWell("B", 4);
-        }
-    }
-
-    private void lblC1_mouseClicked(MouseEvent e) {
-        
-        // Check click count to only handle double click event
-        if (e.getClickCount() == 2 && !e.isConsumed()) {
-            e.consume();
-
-            // Allow the user to select a compound from a dialog and add it to the selected well
-            AddCompoundToWell("C", 1);
-        }
-    }
-
-    private void lblC2_mouseClicked(MouseEvent e) {
-        
-        // Check click count to only handle double click event
-        if (e.getClickCount() == 2 && !e.isConsumed()) {
-            e.consume();
-
-            // Allow the user to select a compound from a dialog and add it to the selected well
-            AddCompoundToWell("C", 2);
-        }
-    }
-
-    private void lblC3_mouseClicked(MouseEvent e) {
-        
-        // Check click count to only handle double click event
-        if (e.getClickCount() == 2 && !e.isConsumed()) {
-            e.consume();
-
-            // Allow the user to select a compound from a dialog and add it to the selected well
-            AddCompoundToWell("C", 3);
-        }
-    }
-
-    private void lblC4_mouseClicked(MouseEvent e) {
-        
-        // Check click count to only handle double click event
-        if (e.getClickCount() == 2 && !e.isConsumed()) {
-            e.consume();
-
-            // Allow the user to select a compound from a dialog and add it to the selected well
-            AddCompoundToWell("C", 4);
-        }
-    }
-
-    private void lblD1_mouseClicked(MouseEvent e) {
-        
-        // Check click count to only handle double click event
-        if (e.getClickCount() == 2 && !e.isConsumed()) {
-            e.consume();
-
-            // Allow the user to select a compound from a dialog and add it to the selected well
-            AddCompoundToWell("D", 1);
-        }
-    }
-
-    private void lblD2_mouseClicked(MouseEvent e) {
-        
-        // Check click count to only handle double click event
-        if (e.getClickCount() == 2 && !e.isConsumed()) {
-            e.consume();
-
-            // Allow the user to select a compound from a dialog and add it to the selected well
-            AddCompoundToWell("D", 2);
-        }
-    }
-
-    private void lblD3_mouseClicked(MouseEvent e) {
-        
-        // Check click count to only handle double click event
-        if (e.getClickCount() == 2 && !e.isConsumed()) {
-            e.consume();
-
-            // Allow the user to select a compound from a dialog and add it to the selected well
-            AddCompoundToWell("D", 3);
-        }
-    }
-
-    private void lblD4_mouseClicked(MouseEvent e) {
-        
-        // Check click count to only handle double click event
-        if (e.getClickCount() == 2 && !e.isConsumed()) {
-            e.consume();
-
-            // Allow the user to select a compound from a dialog and add it to the selected well
-            AddCompoundToWell("D", 4);
-        }
-    }
-
+    
     // TransferCompound
     // - display the frmTransferCompound form for the specified commpound
     private void TransfterCompound(String strCompound){

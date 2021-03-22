@@ -121,6 +121,7 @@ public class frmTransferCompound extends JDialog {
         // Loop through the list of Plate.RowColumn strings
         for(int i = 0; i < lstModel.getSize(); i++) 
         {
+            // Get the row and column characters from the list box control
             String temp = lstModel.getElementAt(i).toString();
             String strPlateName = temp.substring(0, temp.length() - 3);
             String strRowColumn = temp.substring(temp.length() - 2, temp.length());
@@ -142,14 +143,19 @@ public class frmTransferCompound extends JDialog {
                     
                     // Add the well to the plate
                     if(bTransfer){
+                        // Create the well object and sett the properties
                         Well well = new Well();
                         well.Row = strRowColumn.substring(0, 1);
                         well.Column = Integer.parseInt(strRowColumn.substring(1,2));
+                        well.Compound = txtCompound.getText();
                         Plates.get(iPlate).Wells.add(well);
                     }
                 }
             }
         }
+        
+        // Save the new changes
+        SavePlates();
     }
     
     // SavePlates
