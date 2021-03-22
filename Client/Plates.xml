@@ -26,4 +26,9 @@
         <Name>P-83453</Name>
         <Well Column="1" Compound="C432262" Row="A"/>
     </Plate>
+    <Plate>
+        <Name>P-73453</Name>
+        <Well Column="1" Compound="C245624" Row="A"/>
+        <Well Column="3" Compound="C245624" Row="C"/>
+    </Plate>
 </Plates>

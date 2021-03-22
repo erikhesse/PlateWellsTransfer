@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -29,7 +31,6 @@ public class frmMain extends JFrame {
     JMenuItem menuFileExit = new JMenuItem();
     JLabel statusBar = new JLabel();
     private JLabel jLabel1 = new JLabel();
-    private JButton btnGetPlate = new JButton();
     private JButton btnCreatePlate = new JButton();
     private JButton btnRegisterCompound = new JButton();
     private JComboBox cmbPlates = new JComboBox();
@@ -79,7 +80,7 @@ public class frmMain extends JFrame {
         this.setJMenuBar( menuBar );
         this.getContentPane().setLayout( layoutMain );
         panelCenter.setLayout( null );
-        this.setSize(new Dimension(505, 388));
+        this.setSize(new Dimension(479, 388));
         this.setTitle( "Plate Wells Transfer" );
         menuFile.setText( "File" );
         menuFileExit.setText( "Exit" );
@@ -87,16 +88,8 @@ public class frmMain extends JFrame {
         statusBar.setText( "" );
         jLabel1.setText("Plate:");
         jLabel1.setBounds(new Rectangle(10, 20, 34, 14));
-        btnGetPlate.setText("Get Plate");
-        btnGetPlate.setBounds(new Rectangle(190, 15, 95, 20));
-        btnGetPlate.setActionCommand("btnGetPlate");
-        btnGetPlate.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    btnGetPlate_actionPerformed(e);
-                }
-            });
         btnCreatePlate.setText("Create Plate");
-        btnCreatePlate.setBounds(new Rectangle(345, 55, 130, 20));
+        btnCreatePlate.setBounds(new Rectangle(315, 55, 130, 20));
         btnCreatePlate.setActionCommand("btnCreatePlate");
         btnCreatePlate.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -104,7 +97,7 @@ public class frmMain extends JFrame {
                 }
             });
         btnRegisterCompound.setText("Register Compound");
-        btnRegisterCompound.setBounds(new Rectangle(345, 15, 130, 20));
+        btnRegisterCompound.setBounds(new Rectangle(315, 15, 130, 20));
         btnRegisterCompound.setActionCommand("btnRegisterCompound");
         btnRegisterCompound.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -112,6 +105,11 @@ public class frmMain extends JFrame {
                 }
             });
         cmbPlates.setBounds(new Rectangle(55, 15, 125, 20));
+        cmbPlates.addItemListener(new ItemListener() {
+                public void itemStateChanged(ItemEvent e) {
+                    cmbPlates_itemStateChanged(e);
+                }
+            });
         lblRowA.setText("A");
         lblRowA.setBounds(new Rectangle(10, 115, 15, 15));
         lblRowA.setFont(new Font("Tahoma", 1, 16));
@@ -302,7 +300,6 @@ public class frmMain extends JFrame {
         panelCenter.add(cmbPlates, null);
         panelCenter.add(btnRegisterCompound, null);
         panelCenter.add(btnCreatePlate, null);
-        panelCenter.add(btnGetPlate, null);
         panelCenter.add(jLabel1, null);
     }
 
@@ -310,31 +307,6 @@ public class frmMain extends JFrame {
     // - exit the application
     void fileExit_ActionPerformed(ActionEvent e) {
         System.exit(0);
-    }
-
-    // btnGetPlate button event handler
-    // - get the plate details for the selected plate
-    private void btnGetPlate_actionPerformed(ActionEvent e) {
-        
-        // Check if first default item is not selected
-        if (cmbPlates.getSelectedIndex() != 0){
-        
-            // Get the selected plate name
-            String strPlate = cmbPlates.getSelectedItem().toString();
-            
-            // Loop through the plates list for the selected plate
-            for(int i = 0; i < plates.size(); i++){
-                if(plates.get(i).Name.contains(strPlate)){
-                    // Update plate layout controls with the selected plate information
-                    DisplayPlate(plates.get(i));
-                    break;
-                }
-            }
-        }
-        else{
-            // Clear the plate layout controls
-            ClearPlate();
-        }
     }
 
     // btnRegsiterCompound button event handler
@@ -357,14 +329,33 @@ public class frmMain extends JFrame {
         CreatePlate();
     }
 
+    // cmbPlates
+    // - get the plate of the selected item in cmbPlates
+    private void cmbPlates_itemStateChanged(ItemEvent e) {
+        
+        GetPlate();
+    }
+    
     private void lblA1_mouseClicked(MouseEvent e) {
 
-        // Check click count to only handle double click event
-        if (e.getClickCount() == 2 && !e.isConsumed()) {
-            e.consume();
-
-            // Allow the user to select a compound from a dialog and add it to the selected well
-            AddCompoundToWell("A", 1);
+        // Check if right click
+        if (e.getButton() == MouseEvent.BUTTON3){
+            System.out.print("Right click");
+            
+            if(lblA1.getText().length() != 0){
+                // Transfer the selected compound
+                TransfterCompound(lblA1.getText());
+            }
+        }
+        else{
+            // Check click count to only handle double click event
+            if (e.getClickCount() == 2 && !e.isConsumed()) {
+                e.consume(); 
+                
+                
+                // Allow the user to select a compound from a dialog and add it to the selected well
+                AddCompoundToWell("A", 1);
+            }
         }
     }
 
@@ -533,30 +524,55 @@ public class frmMain extends JFrame {
         }
     }
 
+    // TransferCompound
+    // - display the frmTransferCompound form for the specified commpound
+    private void TransfterCompound(String strCompound){
+       
+        // Create dialog
+        frmTransferCompound frm = new frmTransferCompound(this,"Transfer Compound", true);
+        
+        // Set the PlateName and Compound
+        frm.PlateName = lblPlateName.getText();
+        frm.Compound = strCompound;
+        frm.SetPlateCompound();
+        
+        // Set the form location and make visible
+        frm.setLocation(this.getLocation());
+        frm.setVisible(true);    
+    }
+    
     // AddCompoundToWell
     // - allow the user to add a compound to the selected well
     private void AddCompoundToWell(String strRow, int iColumn){
         
-        // Create dialog, set the location and make visible
-        frmAddCompound frm = new frmAddCompound(this,"Add Compound", true);
-        frm.setLocation(this.getLocation());
-        frm.setVisible(true);
-
-        // Loop through the plates list for the selected plate
-        for(int i = 0; i < plates.size(); i++){
-            if(plates.get(i).Name.contains(lblPlateName.getText())){
+        // Check if a plate has been selected
+        if(cmbPlates.getSelectedIndex() != 0){
+            
+            // Create dialog, set the location and make visible
+            frmAddCompound frm = new frmAddCompound(this,"Add Compound", true);
+            frm.setLocation(this.getLocation());
+            frm.setVisible(true);
+    
+            // Check if CompoundID is not empty
+            if(!frm.CompoundID.isEmpty()){
                 
-                // Add the well to the selected plate
-                plates.get(i).AddWell(strRow, iColumn, frm.CompoundID);
-
-                // Update the plate layout controls
-                DisplayPlate(plates.get(i));
-
-                // Save the plates
-                SavePlates();
-                
-                // Jump out of the loop
-                break;
+                // Loop through the plates list for the selected plate
+                for(int i = 0; i < plates.size(); i++){
+                    if(plates.get(i).Name.contains(lblPlateName.getText())){
+                        
+                        // Add the well to the selected plate
+                        plates.get(i).AddWell(strRow, iColumn, frm.CompoundID);
+        
+                        // Update the plate layout controls
+                        DisplayPlate(plates.get(i));
+        
+                        // Save the plates
+                        SavePlates();
+                        
+                        // Jump out of the loop
+                        break;
+                    }
+                }
             }
         }
     }
@@ -573,22 +589,24 @@ public class frmMain extends JFrame {
         frm.setLocation(this.getLocation());
         frm.setVisible(true);
 
-        // Clear the plate layout controls
-        ClearPlate(); 
+        // Check if PlateName is not empty
+        if(!frm.PlateName.isEmpty()){
         
-        // Create the plate object and add it to the plates list
-        Plate newPlate = new Plate();
-        newPlate.Name = frm.PlateName;
-        plates.add(newPlate);
-        
-        // Add the plate to the comboBox control
-        cmbPlates.addItem(newPlate.Name);
-        cmbPlates.setSelectedIndex(cmbPlates.getItemCount() - 1);
-        
-        DisplayPlate(newPlate);
-        
-        // Save the plates
-        SavePlates();
+            // Clear the plate layout controls
+            ClearPlate(); 
+            
+            // Create the plate object and add it to the plates list
+            Plate newPlate = new Plate();
+            newPlate.Name = frm.PlateName;
+            plates.add(newPlate);
+            
+            // Add the plate to the comboBox control
+            cmbPlates.addItem(newPlate.Name);
+            cmbPlates.setSelectedIndex(cmbPlates.getItemCount() - 1);
+    
+            // Save the plates
+            SavePlates();
+        }
     }
     
     // LoadPlates
@@ -608,6 +626,30 @@ public class frmMain extends JFrame {
         }
     }
     
+    // GetPlate
+    // - get the plate selected in cmbPlates
+    private void GetPlate(){
+        
+        // Check if first default item is not selected
+        if (cmbPlates.getSelectedIndex() != 0){
+        
+            // Get the selected plate name
+            String strPlate = cmbPlates.getSelectedItem().toString();
+            
+            // Loop through the plates list for the selected plate
+            for(int i = 0; i < plates.size(); i++){
+                if(plates.get(i).Name.contains(strPlate)){
+                    // Update plate layout controls with the selected plate information
+                    DisplayPlate(plates.get(i));
+                    break;
+                }
+            }
+        }
+        else{
+            // Clear the plate layout controls
+            ClearPlate();
+        }
+    }
     // DisplayPlate
     // - update plate layout controls with the specified plate information
     private void DisplayPlate(Plate plate){
