@@ -4,6 +4,9 @@ The Java project was originally developed using JDeveloper v 11.1.2.4.0 with jdk
 
 Also tested the application using Visual Studio Code v1.54.1 with AdoptOpenJDK v 11.0.10.9.
 
+<strong>Plate see the User Manual (PlateWellsTransfer_UserManual.doc) in the Documentation folder for instructions on how to use the application. </strong>
+<br />
+
 The project contains the following files:<br />
 <strong>Client\Client.jpr</strong>		 - java project file<br />
 <strong>Client\Compounds.xml</strong>		 - XML file containing list of compound IDs<br />
