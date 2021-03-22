@@ -1,14 +1,13 @@
 package client;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Frame;
 
 import java.awt.Rectangle;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 
 import java.util.List;
 
@@ -63,21 +62,31 @@ public class frmTransferCompound extends JDialog {
         this.getContentPane().setLayout( null );
         this.setTitle("Transfer Compound");
         jLabel1.setText("Plate Name:");
-        jLabel1.setBounds(new Rectangle(15, 20, 60, 15));
+        jLabel1.setFont(new Font("Tahoma", 0, 12));
+        jLabel1.setBounds(new Rectangle(15, 20, 70, 15));
         jLabel2.setText("Compound:");
+        jLabel2.setFont(new Font("Tahoma", 0, 12));
         jLabel2.setBounds(new Rectangle(15, 45, 65, 15));
+        txtPlateName.setFont(new Font("Tahoma", 0, 12));
         txtPlateName.setBounds(new Rectangle(80, 15, 105, 20));
         txtPlateName.setFocusable(false);
+        txtCompound.setFont(new Font("Tahoma", 0, 12));
         txtCompound.setBounds(new Rectangle(80, 40, 105, 20));
         txtCompound.setFocusable(false);
         jLabel3.setText("Plate:");
+        jLabel3.setFont(new Font("Tahoma", 0, 12));
         jLabel3.setBounds(new Rectangle(15, 90, 35, 15));
+        cmbPlates.setFont(new Font("Tahoma", 0, 12));
         cmbPlates.setBounds(new Rectangle(50, 85, 115, 20));
         jLabel4.setText("Well:");
+        jLabel4.setFont(new Font("Tahoma", 0, 12));
         jLabel4.setBounds(new Rectangle(15, 115, 34, 14));
+        cmbWells.setFont(new Font("Tahoma", 0, 12));
         cmbWells.setBounds(new Rectangle(50, 110, 115, 20));
+        lstPlateWells.setFont(new Font("Tahoma", 0, 12));
         lstPlateWells.setBounds(new Rectangle(215, 85, 135, 115));
         btnAdd.setText("Add");
+        btnAdd.setFont(new Font("Tahoma", 0, 12));
         btnAdd.setBounds(new Rectangle(90, 145, 75, 21));
         btnAdd.setActionCommand("btnAdd");
         btnAdd.addActionListener(new ActionListener() {
@@ -86,7 +95,8 @@ public class frmTransferCompound extends JDialog {
                 }
             });
         btnTransfer.setText("Transfer");
-        btnTransfer.setBounds(new Rectangle(275, 215, 75, 21));
+        btnTransfer.setFont(new Font("Tahoma", 0, 12));
+        btnTransfer.setBounds(new Rectangle(250, 215, 100, 21));
         btnTransfer.setActionCommand("btnTransfer");
         btnTransfer.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -94,7 +104,8 @@ public class frmTransferCompound extends JDialog {
                 }
             });
         jLabel5.setText("New locations:");
-        jLabel5.setBounds(new Rectangle(215, 65, 70, 15));
+        jLabel5.setFont(new Font("Tahoma", 0, 12));
+        jLabel5.setBounds(new Rectangle(215, 65, 85, 15));
         this.getContentPane().add(jLabel5, null);
         this.getContentPane().add(btnTransfer, null);
         this.getContentPane().add(btnAdd, null);

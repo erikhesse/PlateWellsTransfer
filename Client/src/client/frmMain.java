@@ -87,9 +87,11 @@ public class frmMain extends JFrame {
         menuFileExit.addActionListener( new ActionListener() { public void actionPerformed( ActionEvent ae ) { fileExit_ActionPerformed( ae ); } } );
         statusBar.setText( "" );
         jLabel1.setText("Plate:");
+        jLabel1.setFont(new Font("Tahoma", 0, 12));
         jLabel1.setBounds(new Rectangle(10, 20, 34, 14));
         btnCreatePlate.setText("Create Plate");
-        btnCreatePlate.setBounds(new Rectangle(305, 55, 140, 20));
+        btnCreatePlate.setFont(new Font("Tahoma", 0, 12));
+        btnCreatePlate.setBounds(new Rectangle(305, 55, 145, 20));
         btnCreatePlate.setActionCommand("btnCreatePlate");
         btnCreatePlate.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -97,7 +99,8 @@ public class frmMain extends JFrame {
                 }
             });
         btnRegisterCompounds.setText("Register Compounds");
-        btnRegisterCompounds.setBounds(new Rectangle(305, 15, 140, 20));
+        btnRegisterCompounds.setFont(new Font("Tahoma", 0, 12));
+        btnRegisterCompounds.setBounds(new Rectangle(305, 15, 145, 20));
         btnRegisterCompounds.setActionCommand("btnRegisterCompounds");
         btnRegisterCompounds.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -105,6 +108,7 @@ public class frmMain extends JFrame {
                 }
             });
         cmbPlates.setBounds(new Rectangle(55, 15, 125, 20));
+        cmbPlates.setFont(new Font("Tahoma", 0, 12));
         cmbPlates.addItemListener(new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
                     cmbPlates_itemStateChanged(e);
@@ -112,7 +116,7 @@ public class frmMain extends JFrame {
             });
         lblRowA.setText("A");
         lblRowA.setBounds(new Rectangle(10, 115, 15, 15));
-        lblRowA.setFont(new Font("Tahoma", 1, 16));
+        lblRowA.setFont(new Font("Tahoma", 1, 12));
         lblRowB.setText("B");
         lblRowB.setBounds(new Rectangle(10, 170, 15, 15));
         lblRowB.setFont(new Font("Tahoma", 1, 16));
@@ -134,6 +138,7 @@ public class frmMain extends JFrame {
         lblColumn4.setText("4");
         lblColumn4.setBounds(new Rectangle(245, 80, 10, 15));
         lblColumn4.setFont(new Font("Tahoma", 1, 16));
+        lblA1.setFont(new Font("Tahoma", 0, 12));
         lblA1.setBounds(new Rectangle(30, 100, 55, 45));
         lblA1.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblA1.setToolTipText("A1");
@@ -143,6 +148,7 @@ public class frmMain extends JFrame {
                     lblA1_mouseClicked(e);
                 }
             });
+        lblA2.setFont(new Font("Tahoma", 0, 12));
         lblA2.setBounds(new Rectangle(95, 100, 55, 45));
         lblA2.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblA2.setToolTipText("A2");
@@ -152,6 +158,7 @@ public class frmMain extends JFrame {
                     lblA2_mouseClicked(e);
                 }
             });
+        lblA3.setFont(new Font("Tahoma", 0, 12));
         lblA3.setBounds(new Rectangle(160, 100, 55, 45));
         lblA3.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblA3.setOpaque(true);
@@ -160,6 +167,7 @@ public class frmMain extends JFrame {
                     lblA3_mouseClicked(e);
                 }
             });
+        lblA4.setFont(new Font("Tahoma", 0, 12));
         lblA4.setBounds(new Rectangle(225, 100, 55, 45));
         lblA4.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblA4.setOpaque(true);
@@ -168,6 +176,7 @@ public class frmMain extends JFrame {
                     lblA4_mouseClicked(e);
                 }
             });
+        lblB1.setFont(new Font("Tahoma", 0, 12));
         lblB1.setBounds(new Rectangle(30, 155, 55, 45));
         lblB1.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblB1.setOpaque(true);
@@ -176,6 +185,7 @@ public class frmMain extends JFrame {
                     lblB1_mouseClicked(e);
                 }
             });
+        lblB2.setFont(new Font("Tahoma", 1, 12));
         lblB2.setBounds(new Rectangle(95, 155, 55, 45));
         lblB2.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblB2.setOpaque(true);
@@ -184,6 +194,7 @@ public class frmMain extends JFrame {
                     lblB2_mouseClicked(e);
                 }
             });
+        lblB3.setFont(new Font("Tahoma", 0, 12));
         lblB3.setBounds(new Rectangle(160, 155, 55, 45));
         lblB3.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblB3.setOpaque(true);
@@ -192,6 +203,7 @@ public class frmMain extends JFrame {
                     lblB3_mouseClicked(e);
                 }
             });
+        lblB4.setFont(new Font("Tahoma", 0, 12));
         lblB4.setBounds(new Rectangle(225, 155, 55, 45));
         lblB4.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblB4.setOpaque(true);
@@ -200,6 +212,7 @@ public class frmMain extends JFrame {
                     lblB4_mouseClicked(e);
                 }
             });
+        lblC1.setFont(new Font("Tahoma", 0, 12));
         lblC1.setBounds(new Rectangle(30, 210, 55, 45));
         lblC1.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblC1.setOpaque(true);
@@ -208,6 +221,7 @@ public class frmMain extends JFrame {
                     lblC1_mouseClicked(e);
                 }
             });
+        lblC2.setFont(new Font("Tahoma", 0, 12));
         lblC2.setBounds(new Rectangle(95, 210, 55, 45));
         lblC2.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblC2.setOpaque(true);
@@ -216,6 +230,7 @@ public class frmMain extends JFrame {
                     lblC2_mouseClicked(e);
                 }
             });
+        lblC3.setFont(new Font("Tahoma", 0, 12));
         lblC3.setBounds(new Rectangle(160, 210, 55, 45));
         lblC3.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblC3.setOpaque(true);
@@ -224,6 +239,7 @@ public class frmMain extends JFrame {
                     lblC3_mouseClicked(e);
                 }
             });
+        lblC4.setFont(new Font("Tahoma", 0, 12));
         lblC4.setBounds(new Rectangle(225, 210, 55, 45));
         lblC4.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblC4.setOpaque(true);
@@ -232,6 +248,7 @@ public class frmMain extends JFrame {
                     lblC4_mouseClicked(e);
                 }
             });
+        lblD1.setFont(new Font("Tahoma", 0, 12));
         lblD1.setBounds(new Rectangle(30, 265, 55, 45));
         lblD1.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblD1.setOpaque(true);
@@ -240,6 +257,7 @@ public class frmMain extends JFrame {
                     lblD1_mouseClicked(e);
                 }
             });
+        lblD2.setFont(new Font("Tahoma", 0, 12));
         lblD2.setBounds(new Rectangle(95, 265, 55, 45));
         lblD2.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblD2.setOpaque(true);
@@ -248,6 +266,7 @@ public class frmMain extends JFrame {
                     lblD2_mouseClicked(e);
                 }
             });
+        lblD4.setFont(new Font("Tahoma", 0, 12));
         lblD4.setBounds(new Rectangle(225, 265, 55, 45));
         lblD4.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblD4.setToolTipText("D4");
@@ -257,6 +276,7 @@ public class frmMain extends JFrame {
                     lblD4_mouseClicked(e);
                 }
             });
+        lblD3.setFont(new Font("Tahoma", 0, 12));
         lblD3.setBounds(new Rectangle(160, 265, 55, 45));
         lblD3.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         lblD3.setOpaque(true);

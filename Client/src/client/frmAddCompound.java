@@ -1,6 +1,7 @@
 package client;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Frame;
 
 import java.awt.Rectangle;
@@ -44,11 +45,14 @@ public class frmAddCompound extends JDialog {
         this.setSize(new Dimension(288, 132));
         this.getContentPane().setLayout( null );
         jLabel1.setText("Select Compound:");
-        jLabel1.setBounds(new Rectangle(15, 20, 95, 15));
-        cmbCompounds.setBounds(new Rectangle(115, 15, 135, 20));
+        jLabel1.setFont(new Font("Tahoma", 0, 12));
+        jLabel1.setBounds(new Rectangle(15, 20, 110, 15));
+        cmbCompounds.setFont(new Font("Tahoma", 0, 12));
+        cmbCompounds.setBounds(new Rectangle(125, 15, 125, 20));
         btnAdd.setText("Add");
+        btnAdd.setFont(new Font("Tahoma", 0, 12));
         btnAdd.setBounds(new Rectangle(95, 60, 75, 20));
-        btnAdd.setToolTipText("Add ");
+        btnAdd.setToolTipText("Add");
         btnAdd.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     btnAdd_actionPerformed(e);

@@ -1,6 +1,7 @@
 package client;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Frame;
 
 import java.awt.Rectangle;
@@ -38,9 +39,12 @@ public class frmCreatePlate extends JDialog {
         this.getContentPane().setLayout( null );
         this.setTitle("Create Plate");
         jLabel1.setText("Plate Name:");
-        jLabel1.setBounds(new Rectangle(15, 20, 60, 15));
+        jLabel1.setFont(new Font("Tahoma", 0, 12));
+        jLabel1.setBounds(new Rectangle(15, 20, 70, 15));
+        txtPlateName.setFont(new Font("Tahoma", 0, 12));
         txtPlateName.setBounds(new Rectangle(90, 15, 95, 20));
         btnAdd.setText("Add");
+        btnAdd.setFont(new Font("Tahoma", 0, 12));
         btnAdd.setBounds(new Rectangle(75, 50, 75, 21));
         btnAdd.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
