@@ -32,7 +32,7 @@ public class frmMain extends JFrame {
     JLabel statusBar = new JLabel();
     private JLabel jLabel1 = new JLabel();
     private JButton btnCreatePlate = new JButton();
-    private JButton btnRegisterCompound = new JButton();
+    private JButton btnRegisterCompounds = new JButton();
     private JComboBox cmbPlates = new JComboBox();
     private JLabel lblRowA = new JLabel();
     private JLabel lblRowB = new JLabel();
@@ -89,19 +89,19 @@ public class frmMain extends JFrame {
         jLabel1.setText("Plate:");
         jLabel1.setBounds(new Rectangle(10, 20, 34, 14));
         btnCreatePlate.setText("Create Plate");
-        btnCreatePlate.setBounds(new Rectangle(315, 55, 130, 20));
+        btnCreatePlate.setBounds(new Rectangle(305, 55, 140, 20));
         btnCreatePlate.setActionCommand("btnCreatePlate");
         btnCreatePlate.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     btnCreatePlate_actionPerformed(e);
                 }
             });
-        btnRegisterCompound.setText("Register Compound");
-        btnRegisterCompound.setBounds(new Rectangle(315, 15, 130, 20));
-        btnRegisterCompound.setActionCommand("btnRegisterCompound");
-        btnRegisterCompound.addActionListener(new ActionListener() {
+        btnRegisterCompounds.setText("Register Compounds");
+        btnRegisterCompounds.setBounds(new Rectangle(305, 15, 140, 20));
+        btnRegisterCompounds.setActionCommand("btnRegisterCompounds");
+        btnRegisterCompounds.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    btnRegisterCompound_actionPerformed(e);
+                    btnRegisterCompounds_actionPerformed(e);
                 }
             });
         cmbPlates.setBounds(new Rectangle(55, 15, 125, 20));
@@ -298,7 +298,7 @@ public class frmMain extends JFrame {
         panelCenter.add(lblRowB, null);
         panelCenter.add(lblRowA, null);
         panelCenter.add(cmbPlates, null);
-        panelCenter.add(btnRegisterCompound, null);
+        panelCenter.add(btnRegisterCompounds, null);
         panelCenter.add(btnCreatePlate, null);
         panelCenter.add(jLabel1, null);
     }
@@ -311,7 +311,7 @@ public class frmMain extends JFrame {
 
     // btnRegsiterCompound button event handler
     // - show the frmRegisterCompounds form to allow the user to add compounds
-    private void btnRegisterCompound_actionPerformed(ActionEvent e) {
+    private void btnRegisterCompounds_actionPerformed(ActionEvent e) {
     
         // Create the Register Compounds form
         frmRegisterCompound frm = new frmRegisterCompound();
@@ -473,6 +473,10 @@ public class frmMain extends JFrame {
         // Set the form location and make visible
         frm.setLocation(this.getLocation());
         frm.setVisible(true);    
+        
+        // Create the Compoundtracking object and get the list of plates
+        CompoundTracking cmpTracking = new CompoundTracking();
+        plates = cmpTracking.GetPlates();
     }
     
     // AddCompoundToWell

@@ -37,7 +37,8 @@ public class frmTransferCompound extends JDialog {
     String PlateName;
     String Compound;
     List<Plate> Plates;
-    
+    private JLabel jLabel5 = new JLabel();
+
     public frmTransferCompound() {
         this(null, "", false);
     }
@@ -92,6 +93,9 @@ public class frmTransferCompound extends JDialog {
                     btnTransfer_actionPerformed(e);
                 }
             });
+        jLabel5.setText("New locations:");
+        jLabel5.setBounds(new Rectangle(215, 65, 70, 15));
+        this.getContentPane().add(jLabel5, null);
         this.getContentPane().add(btnTransfer, null);
         this.getContentPane().add(btnAdd, null);
         this.getContentPane().add(lstPlateWells, null);
@@ -156,6 +160,9 @@ public class frmTransferCompound extends JDialog {
         
         // Save the new changes
         SavePlates();
+        
+        // Close the form
+        this.dispose();
     }
     
     // SavePlates

@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 public class frmRegisterCompound extends JFrame {
     private JLabel jLabel1 = new JLabel();
     private JTextField txtCompound = new JTextField();
-    private JButton btnAddCompound = new JButton();
+    private JButton btnRegister = new JButton();
     private JList lstCompounds = new JList();
     private JButton btnClose = new JButton();
     private DefaultListModel lstModel = new DefaultListModel();
@@ -42,10 +42,10 @@ public class frmRegisterCompound extends JFrame {
         jLabel1.setText("Enter Compound ID:");
         jLabel1.setBounds(new Rectangle(10, 15, 110, 15));
         txtCompound.setBounds(new Rectangle(10, 35, 120, 20));
-        btnAddCompound.setText("Add Compound");
-        btnAddCompound.setBounds(new Rectangle(20, 70, 110, 20));
-        btnAddCompound.setActionCommand("btnAddCompound");
-        btnAddCompound.addActionListener(new ActionListener() {
+        btnRegister.setText("Register");
+        btnRegister.setBounds(new Rectangle(10, 70, 120, 20));
+        btnRegister.setActionCommand("btnRegister");
+        btnRegister.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     btnAddCompound_actionPerformed(e);
                 }
@@ -64,7 +64,7 @@ public class frmRegisterCompound extends JFrame {
         this.getContentPane().add(jLabel2, null);
         this.getContentPane().add(btnClose, null);
         this.getContentPane().add(lstCompounds, null);
-        this.getContentPane().add(btnAddCompound, null);
+        this.getContentPane().add(btnRegister, null);
         this.getContentPane().add(txtCompound, null);
         this.getContentPane().add(jLabel1, null);
     }
@@ -79,13 +79,27 @@ public class frmRegisterCompound extends JFrame {
     // - add the compound entered in the text input control into the Compounds JList control
     private void btnAddCompound_actionPerformed(ActionEvent e) {
         
+        boolean bAdd = true;   // Set to true for default condition
+        
         // Get the Compound ID entered by the user
         String strCompound = txtCompound.getText();
-        // Add the Compound ID to the list
-        lstModel.addElement(strCompound);
         
-        // Save the Compounds
-        SaveCompounds();
+        // Need to check if compound already exists in the list
+        for(int i = 0; i < lstModel.getSize(); i++){
+            if(lstModel.getElementAt(i).toString().contains(strCompound)){
+                bAdd = false;
+                break;
+            }
+        }
+            
+        // If compounds doesn't exist in the list then add it
+        if(bAdd){
+            // Add the Compound ID to the list
+            lstModel.addElement(strCompound);
+            
+            // Save the Compounds
+            SaveCompounds();
+        }
     }
 
     // SaveCompounds
